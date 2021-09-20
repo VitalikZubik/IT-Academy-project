@@ -380,9 +380,11 @@ html {
 
 .name_user {
     position: absolute;
-    right: 5px;
+    right: 10px;
     top: 5px;
     color: rgba(5, 5, 228, 0.8);
+    font-size: 25px;
+    font-weight: bold;
 }
 
 @keyframes AnimationSplash
