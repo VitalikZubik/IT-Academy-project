@@ -173,7 +173,7 @@ stateDOM.getDOMState().form.addEventListener('submit', async (e) => {
     if (result.name) {
         stateGame.isLogin = true;
         routing.switchToMainPage();
-        
+
         for (let elem of stateDOM.getDOMState().form) {
             if (elem.tagName === 'INPUT') {
                 elem.value = '';
@@ -181,7 +181,7 @@ stateDOM.getDOMState().form.addEventListener('submit', async (e) => {
         }
     } else if (result.message === 'Пользователь успешно создан!') {
         stateDOM.getDOMState().header.querySelector('p').innerHTML = result.message;
-        setTimeout(() => {stateDOM.getDOMState().header.querySelector('p').innerHTML = '';}, 1000)
+        setTimeout(() => {stateDOM.getDOMState().header.querySelector('p').innerHTML = '';}, 1000);
         authorization.onClickBtnEntry();
 
         for (let elem of stateDOM.getDOMState().form) {
@@ -189,6 +189,9 @@ stateDOM.getDOMState().form.addEventListener('submit', async (e) => {
                 elem.value = '';
             }
         }
+    } else if (result.message === `Пользователь с таким email - ${data.email} уже существует!`) {
+        stateDOM.getDOMState().header.querySelector('p').innerHTML = result.message;
+        setTimeout(() => {stateDOM.getDOMState().header.querySelector('p').innerHTML = '';}, 2000);
     } else {
         stateDOM.getDOMState().header.querySelector('p').innerHTML = result.message;
         setTimeout(() => {stateDOM.getDOMState().header.querySelector('p').innerHTML = '';}, 2000)
