@@ -5,6 +5,7 @@ import { isWelcome, Routing } from './src/js/routing';
 import { Placement } from './src/js/placement';
 import { BattleController } from './src/js/battle-controller';
 import { iconSound, turnOffOrOnSound, turnOnSound } from './src/js/audio';
+import { authorization } from './src/js/authorization';
 
 export const stateDOM = new DOM(document.querySelector('.container'));
 stateDOM.init();
@@ -16,6 +17,7 @@ export const stateGame = {
     compShot: false,
     control: null,
     isWelcome: false,
+    isLogin: false,
     shotTime: 25,
     timer: null,
     title: stateDOM.getDOMState().header.querySelector('h1')
@@ -122,6 +124,16 @@ const onWindowWelcome = () => {
     document.querySelector('.icon_sound').classList.remove('hide');
     stateGame.title.innerHTML = 'Морской бой';
 
+    if (stateGame.isLogin) {
+        stateDOM.getDOMState().btnExit.classList.remove('hide');
+        stateDOM.getDOMState().btnEntry.classList.add('hide');
+        stateDOM.getDOMState().btnPlay.classList.remove('hide');
+    } else {
+        stateDOM.getDOMState().btnExit.classList.add('hide');
+        stateDOM.getDOMState().btnEntry.classList.remove('hide');
+        stateDOM.getDOMState().btnPlay.classList.add('hide');
+    }
+
     stateDOM.getDOMState().windowWelcome.removeEventListener('click', onWindowWelcome);
 
     turnOnSound ();
@@ -129,7 +141,58 @@ const onWindowWelcome = () => {
 }
 
 stateDOM.getDOMState().windowWelcome.addEventListener('click', onWindowWelcome);
+stateDOM.getDOMState().btnEntryLogin.addEventListener('click', authorization.onClickBtnEntry);
+stateDOM.getDOMState().btnRegistration.addEventListener('click', authorization.onClickBtnRegistration);
 
 const routing = new Routing(stateDOM.getDOMState());
 routing.switchToStateFromURLHash();
 routing.setObserver();
+
+stateDOM.getDOMState().form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const form = stateDOM.getDOMState().form;
+    
+    let data = {};
+
+    let result;
+
+    for (let elem of form) {
+        if (elem.tagName === 'INPUT') {
+            data[elem.id] = elem.value;
+        }
+
+        if (elem.tagName === 'BUTTON') {
+            if (elem.innerHTML === 'Войти') {
+                result = await authorization.login(data);
+            } else {
+                result = await authorization.registration(data);
+            }
+        }
+    }
+    if (result.name) {
+        stateGame.isLogin = true;
+        routing.switchToMainPage();
+        
+        for (let elem of stateDOM.getDOMState().form) {
+            if (elem.tagName === 'INPUT') {
+                elem.value = '';
+            }
+        }
+    } else if (result.message === 'Пользователь успешно создан!') {
+        stateDOM.getDOMState().header.querySelector('p').innerHTML = result.message;
+        setTimeout(() => {stateDOM.getDOMState().header.querySelector('p').innerHTML = '';}, 1000)
+        authorization.onClickBtnEntry();
+
+        for (let elem of stateDOM.getDOMState().form) {
+            if (elem.tagName === 'INPUT') {
+                elem.value = '';
+            }
+        }
+    } else {
+        stateDOM.getDOMState().header.querySelector('p').innerHTML = result.message;
+        setTimeout(() => {stateDOM.getDOMState().header.querySelector('p').innerHTML = '';}, 2000)
+    }
+
+});
+

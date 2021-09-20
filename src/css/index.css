@@ -92,6 +92,67 @@ html {
     margin-top: 20px;
 }
 
+.wrap_authorization {
+    grid-column: 1/4;
+    grid-row: 2/4;
+    width: 90%;
+    height: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px 1fr;
+    background: rgba(128, 128, 128, 0.8);
+    gap: 5px;
+}
+
+.btn_page_login,
+.btn_page_registration {
+    color: rgba(5, 5, 228, 0.8);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn_page_login,
+.btn_page_registration:hover {
+    cursor: pointer;
+}
+
+.active_btn {
+    outline: 2px solid rgb(39, 248, 67);
+}
+
+.wrap_form {
+    grid-column: 1/3;
+    grid-row: 2/3;
+    width: 50%;
+    height: 100%;
+    align-self:center;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrap_elements {
+    display: grid;
+    grid-template-columns: 1.3fr 3fr;
+    padding: 5px;
+}
+
+.wrap_elements label {
+    color: rgba(5, 5, 228, 0.8);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.wrap_elements .btn_submit {
+    grid-column: 1/3;
+    width: 200px;
+    min-height: 30px;
+    font-size: 20px;
+    align-self:center;
+    justify-self: center;
+}
+
 .btn {
     min-width: 180px;
     min-height: 60px;

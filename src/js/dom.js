@@ -7,6 +7,7 @@ export class DOM {
     }
 
     init = () => {
+        this.createLoginPage();
         this.createWindowWelcome();
         this.createHeader();
         this.createMainMenu();
@@ -16,6 +17,81 @@ export class DOM {
 
     getDOMState = () => {
         return this.DOMState;
+    }
+
+    createLoginPage = () => {
+        let value = ''
+        this.DOMState.wrapAuthorization = document.createElement('div');
+        this.DOMState.wrapAuthorization.setAttribute('class', 'wrap_authorization');
+
+        this.DOMState.btnEntryLogin = document.createElement('button');
+        this.DOMState.btnEntryLogin.setAttribute('class', 'btn_page_login');
+        value = document.createTextNode('Вход');
+        this.DOMState.btnEntryLogin.appendChild(value);
+        this.DOMState.wrapAuthorization.appendChild(this.DOMState.btnEntryLogin);
+
+        this.DOMState.btnRegistration = document.createElement('button');
+        this.DOMState.btnRegistration.setAttribute('class', 'btn_page_registration');
+        value = document.createTextNode('Регистрация');
+        this.DOMState.btnRegistration.appendChild(value);
+        this.DOMState.wrapAuthorization.appendChild(this.DOMState.btnRegistration);
+
+        const wrapForm = document.createElement('div');
+        wrapForm.setAttribute('class', 'wrap_form');
+        this.DOMState.wrapAuthorization.appendChild(wrapForm);
+
+        this.DOMState.form = document.createElement('form');
+        this.DOMState.form.setAttribute('class', 'form');
+        wrapForm.appendChild(this.DOMState.form);
+
+        const wrapName = document.createElement('div');
+        wrapName.setAttribute('class', 'wrap_elements wrap_input_name');
+
+        const labelName = document.createElement('label');
+        labelName.setAttribute('for', 'name');
+        value = document.createTextNode('Имя:');
+        labelName.appendChild(value);
+        wrapName.appendChild(labelName);
+
+        this.DOMState.inputName = document.createElement('input');
+        this.DOMState.inputName.setAttribute('id', 'name');
+        this.DOMState.inputName.setAttribute('type', 'text');
+        this.DOMState.inputName.setAttribute('name', 'name');
+        this.DOMState.inputName.setAttribute('placeholder', 'Введите имя');
+        wrapName.appendChild(this.DOMState.inputName);
+
+        this.DOMState.form.appendChild(wrapName);
+
+        const wrapEmail = document.createElement('div');
+        wrapEmail.setAttribute('class', 'wrap_elements wrap_input_email');
+
+        const labelEmail = document.createElement('label');
+        labelEmail.setAttribute('for', 'email');
+        value = document.createTextNode('Email:');
+        labelEmail.appendChild(value);
+        wrapEmail.appendChild(labelEmail);
+
+        this.DOMState.inputEmail = document.createElement('input');
+        this.DOMState.inputEmail.setAttribute('id', 'email');
+        this.DOMState.inputEmail.setAttribute('type', 'email');
+        this.DOMState.inputEmail.setAttribute('name', 'email');
+        this.DOMState.inputEmail.setAttribute('placeholder', 'Введите email');
+        wrapEmail.appendChild(this.DOMState.inputEmail);
+
+        this.DOMState.form.appendChild(wrapEmail);
+
+        const wrapBtn = document.createElement('div');
+        wrapBtn.setAttribute('class', 'wrap_elements wrap_submit');
+
+        this.DOMState.btnSubmit = document.createElement('button');
+        this.DOMState.btnSubmit.setAttribute('class', 'btn btn_submit');
+        value = document.createTextNode('Отправить');
+        this.DOMState.btnSubmit.appendChild(value);
+        wrapBtn.appendChild(this.DOMState.btnSubmit);
+
+        this.DOMState.form.appendChild(wrapBtn);
+
+        this.parent.appendChild(this.DOMState.wrapAuthorization);
     }
 
     createHeader = () => { 

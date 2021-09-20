@@ -1,5 +1,5 @@
 "use strict";
-import { stateGame, stateDOM } from "../../index";
+import { stateGame, stateDOM, human } from "../../index";
 
 export class Routing {
     constructor ({btnEntry,btnPlay,btnInstruction,btnExit,btnMain,btnStartOver,btnRandom,btnManually,btnStartFight,btnContinue}) {
@@ -25,6 +25,28 @@ export class Routing {
         this.btnStartFight.addEventListener('click', this.switchToGamePageFight);
         this.btnContinue.addEventListener('click', this.switchToGamePageFight);
         this.btnStartOver.addEventListener('click', this.switchToGamePage);
+        this.btnEntry.addEventListener('click', this.switchToLoginPage);
+        this.btnExit.addEventListener('click', () => {
+            stateGame.isLogin = false;
+            // очищаем поле игрока
+            human.cleanField();
+            stateDOM.getDOMState().header.querySelector('p').innerHTML = '';
+
+            // устанавливаем флаги в исходное состояние
+            stateGame.startGame = false;
+            stateGame.compShot = false;
+
+           if (stateGame.control) {
+                // обнуляем массивы с координатами выстрела
+            stateGame.control.coordsRandomHit = [];
+            stateGame.control.coordsFixedHit = [];
+            stateGame.control.coordsAroundHit = [];
+            // сбрасываем значения объекта tempShip
+            stateGame.control.resetTempShip();
+           }
+
+            this.switchToStateFromURLHash();
+        });
     }
 
     switchToStateFromURLHash = () => {
@@ -46,6 +68,7 @@ export class Routing {
                     stateDOM.getDOMState().mainMenu.classList.remove('hide');
                     stateDOM.getDOMState().menu.classList.add('hide');
                     stateDOM.getDOMState().placementInstruction.classList.add('hide');
+                    stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
 
                     this.btnStartFight.classList.add('hide');
                     this.btnExit.classList.add('hide');
@@ -61,11 +84,22 @@ export class Routing {
                         this.btnPlay.classList.remove('hide');
                     }
 
+                    if (stateGame.isLogin) {
+                        this.btnExit.classList.remove('hide');
+                        this.btnEntry.classList.add('hide');
+                    } else {
+                        this.btnExit.classList.add('hide');
+                        this.btnEntry.classList.remove('hide');
+                        this.btnPlay.classList.add('hide');
+                        this.btnContinue.classList.add('hide');
+                    }
+
                     stateGame.title.innerHTML = 'Морской бой';
                 } else {
                     stateDOM.getDOMState().mainMenu.classList.add('hide');
                     stateDOM.getDOMState().menu.classList.add('hide');
                     stateDOM.getDOMState().placementInstruction.classList.add('hide');
+                    stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
 
                     this.btnStartFight.classList.add('hide');
 
@@ -80,6 +114,7 @@ export class Routing {
                 stateDOM.getDOMState().shipsCollection.classList.add('hide');
                 stateDOM.getDOMState().placementInstruction.classList.remove('hide');
                 stateDOM.getDOMState().fieldComputer.hidden = true;
+                stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
 
                 this.btnStartOver.classList.add('hide');
                 this.btnStartFight.classList.add('hide');
@@ -93,6 +128,7 @@ export class Routing {
                 stateDOM.getDOMState().mainMenu.classList.add('hide');
                 stateDOM.getDOMState().menu.classList.add('hide');
                 stateDOM.getDOMState().fieldComputer.hidden = true;
+                stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
 
                 this.btnStartOver.classList.add('hide');
                 this.btnStartFight.classList.add('hide');
@@ -107,6 +143,7 @@ export class Routing {
                 stateDOM.getDOMState().shipsCollection.classList.add('hide');
                 stateDOM.getDOMState().placementInstruction.classList.remove('hide');
                 stateDOM.getDOMState().fieldComputer.hidden = true;
+                stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
 
                 this.btnStartOver.classList.add('hide');
                 this.btnStartFight.classList.remove('hide');
@@ -120,12 +157,30 @@ export class Routing {
                 stateDOM.getDOMState().menu.classList.remove('hide');
                 stateDOM.getDOMState().placementInstruction.classList.add('hide');
                 stateDOM.getDOMState().fieldComputer.hidden = false;
+                stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
 
                 this.btnStartFight.classList.add('hide');
                 this.btnStartOver.classList.add('hide');
 
                 document.querySelectorAll('.wrap_field').forEach(elem=>elem.classList.remove('hide'));
                 stateGame.title.innerHTML = 'Морской бой между эскадрами';                
+                break;
+            case 'Login':
+                stateDOM.getDOMState().mainMenu.classList.add('hide');
+                stateDOM.getDOMState().menu.classList.add('hide');
+                stateDOM.getDOMState().placementInstruction.classList.add('hide');
+                stateDOM.getDOMState().fieldComputer.hidden = true;
+                stateDOM.getDOMState().wrapAuthorization.classList.remove('hide');
+                stateDOM.getDOMState().btnEntryLogin.classList.add('active');
+
+                this.btnStartFight.classList.add('hide');
+                this.btnStartOver.classList.add('hide');
+
+                document.querySelector('.wrap_input_name').classList.add('hide');
+                document.querySelectorAll('.wrap_field').forEach(elem=>elem.classList.add('hide'));
+
+                stateGame.title.innerHTML = 'Введите email для входа.';
+                stateDOM.getDOMState().btnSubmit.innerHTML = 'Войти';               
                 break;
         }        
     }
@@ -160,6 +215,10 @@ export class Routing {
 
     switchToGamePageFight = () => {
         this.switchToState( { pagename:'Game_fight' } );
+    }
+
+    switchToLoginPage = () => {
+        this.switchToState( { pagename:'Login' } );
     }
 }
 
