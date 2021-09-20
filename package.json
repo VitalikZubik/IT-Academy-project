@@ -1,0 +1,19 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "game SeaBattle JavaScript",
+  "main": "./index.js",
+  "scripts": {
+    "dev": " webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "keywords": [
+    "JavaScript"
+  ],
+  "author": "Vitalik Zubik <vitalik_zubik1992@mail.ru>",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.52.1",
+    "webpack-cli": "^4.8.0"
+  }
+}
