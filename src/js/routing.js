@@ -31,7 +31,7 @@ export class Routing {
             // очищаем поле игрока
             human.cleanField();
             stateDOM.getDOMState().header.querySelector('p').innerHTML = '';
-
+            document.querySelector('.name_user').innerHTML = '';
             // устанавливаем флаги в исходное состояние
             stateGame.startGame = false;
             stateGame.compShot = false;
@@ -105,6 +105,7 @@ export class Routing {
 
                     document.querySelector('.icon_sound').classList.add('hide');
                     document.querySelectorAll('.wrap_field').forEach(elem=>elem.classList.add('hide'));
+                    document.querySelector('.name_user').classList.add('hide');
                 }
                 break;
 

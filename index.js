@@ -122,6 +122,7 @@ const onWindowWelcome = () => {
     document.querySelector('.btn_entry').classList.add('hide');
     document.querySelector('.btn_continue').classList.add('hide');
     document.querySelector('.icon_sound').classList.remove('hide');
+    document.querySelector('.name_user').classList.remove('hide');
     stateGame.title.innerHTML = 'Морской бой';
 
     if (stateGame.isLogin) {
@@ -179,6 +180,8 @@ stateDOM.getDOMState().form.addEventListener('submit', async (e) => {
                 elem.value = '';
             }
         }
+
+        document.querySelector('.name_user').innerHTML = result.name;
     } else if (result.message === 'Пользователь успешно создан!') {
         stateDOM.getDOMState().header.querySelector('p').innerHTML = result.message;
         setTimeout(() => {stateDOM.getDOMState().header.querySelector('p').innerHTML = '';}, 1000);
