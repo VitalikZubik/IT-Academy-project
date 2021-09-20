@@ -116,6 +116,7 @@ export class Routing {
                 stateDOM.getDOMState().placementInstruction.classList.remove('hide');
                 stateDOM.getDOMState().fieldComputer.hidden = true;
                 stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
+                document.querySelector('.window_welcome').classList.add('hide');
 
                 this.btnStartOver.classList.add('hide');
                 this.btnStartFight.classList.add('hide');
@@ -130,6 +131,7 @@ export class Routing {
                 stateDOM.getDOMState().menu.classList.add('hide');
                 stateDOM.getDOMState().fieldComputer.hidden = true;
                 stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
+                document.querySelector('.window_welcome').classList.add('hide');
 
                 this.btnStartOver.classList.add('hide');
                 this.btnStartFight.classList.add('hide');
@@ -145,6 +147,7 @@ export class Routing {
                 stateDOM.getDOMState().placementInstruction.classList.remove('hide');
                 stateDOM.getDOMState().fieldComputer.hidden = true;
                 stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
+                document.querySelector('.window_welcome').classList.add('hide');
 
                 this.btnStartOver.classList.add('hide');
                 this.btnStartFight.classList.remove('hide');
@@ -159,6 +162,7 @@ export class Routing {
                 stateDOM.getDOMState().placementInstruction.classList.add('hide');
                 stateDOM.getDOMState().fieldComputer.hidden = false;
                 stateDOM.getDOMState().wrapAuthorization.classList.add('hide');
+                document.querySelector('.window_welcome').classList.add('hide');
 
                 this.btnStartFight.classList.add('hide');
                 this.btnStartOver.classList.add('hide');
@@ -173,6 +177,7 @@ export class Routing {
                 stateDOM.getDOMState().fieldComputer.hidden = true;
                 stateDOM.getDOMState().wrapAuthorization.classList.remove('hide');
                 stateDOM.getDOMState().btnEntryLogin.classList.add('active_btn');
+                document.querySelector('.window_welcome').classList.add('hide');
 
                 this.btnStartFight.classList.add('hide');
                 this.btnStartOver.classList.add('hide');
